@@ -25,7 +25,7 @@ class Docker implements Serializable {
         }
     }
 
-    def incrementVersion(parsedVersion){
+    def incrementVersion(){
         script.sh "mvn build-helper:parse-version versions:set \\\n" +
                 "  -DnewVersion=\\${parsedVersion.majorVersion}.\\${parsedVersion.MinorVersion}.\\${parsedVersion.nextIncrementalVersion}"
     }
