@@ -15,7 +15,6 @@ class Docker implements Serializable {
         script.withCredentials([script.usernamePassword(credentialsId: 'docker-hub-repo', passwordVariable: 'PASS', usernameVariable: 'USER')]){
 
             script.sh "docker login -u $script.USER -p $script.PASS"
-
         }
     }
 
@@ -24,5 +23,10 @@ class Docker implements Serializable {
 
             script.sh "docker push $imageName"
         }
+    }
+
+    def incrementVersion(parsedVersion){
+        script.sh "mvn build-helper:parse-version versions:set \\\n" +
+                "  -DnewVersion=\\${parsedVersion.majorVersion}.\\${parsedVersion.MinorVersion}.\\${parsedVersion.nextIncrementalVersion}"
     }
 }
